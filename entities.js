@@ -1,5 +1,10 @@
 Options = new Meteor.Collection('options');
 
+orion.dictionary.addDefinition('optionValues', 'basic', {
+    type: [String],
+    label: 'Options'
+});
+
 orion.addEntity('pages', {
     title: {
         type: String,
@@ -12,7 +17,19 @@ orion.addEntity('pages', {
     },
     type: {
         type: String,
-        allowedValues: Options.find().fetch().map(function(o){return o.name;}),
+        allowedValues: function() {
+            return orion.dictionary.collection.find().fetch()[0]['optionValues'];
+        },
+        autoform: {
+            options: function() {
+                return orion.dictionary.collection.find().fetch()[0]['optionValues'].map(function(value) {
+                    return {
+                        value: value,
+                        label: value
+                    };
+                });
+            }
+        },
         optional: false,
         label: 'What type of page is this?'
     },
@@ -37,3 +54,13 @@ orion.addEntity('pages', {
         orion.attributeColumn('froala', 'body', 'Preview')
     ]
 });
+
+if (Meteor.isClient) {
+    Meteor.subscribe('options');
+}
+
+if (Meteor.isServer) {
+    Meteor.publish('options', function() {
+        return Options.find();
+    });
+}
