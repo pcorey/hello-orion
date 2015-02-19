@@ -1,28 +1,21 @@
-Options = new Meteor.Collection('options');
-
-orion.dictionary.addDefinition('optionValues', 'basic', {
+orion.dictionary.addDefinition('categories', 'basic', {
     type: [String],
-    label: 'Options'
+    label: 'Categories'
 });
 
-orion.addEntity('pages', {
+orion.addEntity('articles', {
     title: {
         type: String,
         label: 'Title'
     },
-    public: {
-        type: Boolean,
-        defaultValue: false,
-        label: 'Visible to non-members?'
-    },
-    type: {
+    category: {
         type: String,
         allowedValues: function() {
-            return orion.dictionary.collection.find().fetch()[0]['optionValues'];
+            return orion.dictionary.collection.findOne()['categories'];
         },
         autoform: {
             options: function() {
-                return orion.dictionary.collection.find().fetch()[0]['optionValues'].map(function(value) {
+                return orion.dictionary.collection.findOne()['categories'].map(function(value) {
                     return {
                         value: value,
                         label: value
@@ -31,36 +24,22 @@ orion.addEntity('pages', {
             }
         },
         optional: false,
-        label: 'What type of page is this?'
+        label: 'Category'
     },
-    body: orion.attribute('froala', {
-        label: 'Page Contents',
+    content: orion.attribute('froala', {
+        label: 'Content',
         optional: false
     })
 }, {
     icon: 'bookmark',
-    sidebarName: 'Pages',
-    pluralName: 'Pages',
-    singularName: 'Page',
+    sidebarName: 'Articles',
+    pluralName: 'Articles',
+    singularName: 'Article',
     tableColumns: [
         {
             data: 'title',
             title: 'Title'
         },
-        {
-            data: 'public',
-            title: 'Public'
-        },
-        orion.attributeColumn('froala', 'body', 'Preview')
+        orion.attributeColumn('froala', 'content', 'Preview')
     ]
 });
-
-if (Meteor.isClient) {
-    Meteor.subscribe('options');
-}
-
-if (Meteor.isServer) {
-    Meteor.publish('options', function() {
-        return Options.find();
-    });
-}
