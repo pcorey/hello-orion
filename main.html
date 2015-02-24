@@ -1,0 +1,31 @@
+<template name="main">
+    <h1>Main</h1>
+    <h2>test: {{{test}}}</h2>
+    {{#each articles}}
+        <table border=1>
+            <thead>
+                <tr>
+                    <td>{{title}}</td>
+                    <td>{{category}}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">{{{content}}}</td>
+                </tr>
+            </tbody>
+        </table>
+    {{/each}}
+</template>
+
+<template name="loading">
+    <h2>loading...</h2>
+</template>
+
+<template name="tester">
+    <div style="background-color: pink;">
+        <p>Tester</p>
+        <p>{{this}}</p>
+        <p>{{test}}</p>
+    </div>
+</template>

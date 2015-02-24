@@ -26,10 +26,52 @@ orion.addEntity('articles', {
         optional: false,
         label: 'Category'
     },
-    content: orion.attribute('froala', {
+    content: {
+        type: String,
         label: 'Content',
-        optional: false
-    })
+        autoform: {
+            afFieldInput: {
+                type: 'froala',
+                inlineMode: false,
+                buttons: ['undo', 'redo' , 'bold', 'sep', 'alert', 'insertHTML'],
+
+                customButtons: {
+                    alert: {
+                        title: "Alert",
+                        icon: {
+                            type: "font",
+                            value: "fa fa-info"
+                        },
+                        callback: function () {
+                            //this.insertHTML('{{> tester 1337}}');
+                            // var fragment = Meteor.render(function() {
+                            //     return Template['tester']();
+                            // });
+                            // this.insertHTML(fragment);
+                            var html = Blaze.toHTML(Blaze.With(1337, function() {
+                                return Template.tester;
+                            }));
+                            this.insertHTML(html);
+                            this.sync();
+                            this.saveUndoStep();
+                        },
+                        refresh: function () {
+                            // This method is called when the state of the button might have been changed.
+                        }
+                    }
+                }
+                // froala options goes here
+            }
+        }
+    }
+    // content: orion.attribute('froala', {
+    //     label: 'Content',
+    //     optional: false,
+    //     afFieldInput: {
+
+    //     }
+    //     //colors: ["#61BD6D", "#1ABC9C", "#54ACD2"]
+    // })
 }, {
     icon: 'bookmark',
     sidebarName: 'Articles',

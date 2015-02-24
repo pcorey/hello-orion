@@ -18,12 +18,13 @@ coffeescript@1.0.5
 dburles:collection-helpers@1.0.2
 ddp@1.0.14
 deps@1.0.6
+donchess:autoform-froala@0.0.2
 ejson@1.0.5
 email@1.0.5
 fastclick@1.0.2
 follower-livedata@1.0.3
 fortawesome:fontawesome@4.2.0
-froala:editor@1.2.4
+froala:editor@1.2.6
 geojson-utils@1.0.2
 html-tools@1.0.3
 htmljs@1.0.3
@@ -82,8 +83,8 @@ tracker@1.0.5
 ui@1.0.5
 underscore@1.0.2
 url@1.0.3
-useraccounts:bootstrap@1.7.1
-useraccounts:core@1.7.1
+useraccounts:bootstrap@1.8.1
+useraccounts:core@1.8.1
 webapp@1.1.6
 webapp-hashing@1.0.2
 wizonesolutions:underscore-string@1.0.0
