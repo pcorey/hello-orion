@@ -1,7 +1,54 @@
+orion.admin.addAdminSubscription(orion.subs.subscribe('entity', 'pages'));
+
 orion.dictionary.addDefinition('categories', 'basic', {
     type: [String],
     label: 'Categories'
 });
+
+// orion.dictionary.addDefinition('pages', 'config', {
+//     type: [String],
+//     optional: false,
+//     label: 'Page Order',
+//     allowedValues: function() {
+//         return orion.dictionary.collection.findOne()['categories'];
+//     },
+//     autoform: {
+//         options: function() {
+//             return orion.dictionary.collection.findOne()['categories'].map(function(value) {
+//                 return {
+//                     value: value,
+//                     label: value
+//                 };
+//             });
+//         }
+//     }
+// });
+
+orion.dictionary.addDefinition('pages.$', 'config', {
+    type: String,
+    label: 'Page',
+    optional: false,
+    autoform: {
+        type: 'select',
+        options: function() {
+            return orion.entities.pages.collection.find().fetch().map(function(page) {
+                return {
+                    value: page._id,
+                    label: page.title
+                };
+            });
+        }
+    }
+});
+
+orion.dictionary.addDefinition('pages', 'config', {
+    type: Array,
+    minCount: 1,
+    maxCount: 4,
+    optional: false,
+    label: 'Page Order'
+});
+
 
 orion.addEntity('articles', {
     title: {
@@ -77,6 +124,36 @@ orion.addEntity('articles', {
     sidebarName: 'Articles',
     pluralName: 'Articles',
     singularName: 'Article',
+    tableColumns: [
+        {
+            data: 'title',
+            title: 'Title'
+        },
+        orion.attributeColumn('froala', 'content', 'Preview')
+    ]
+});
+
+
+orion.addEntity('pages', {
+    title: {
+        type: String,
+        label: 'Title'
+    },
+    content: {
+        type: String,
+        label: 'Content',
+        autoform: {
+            afFieldInput: {
+                type: 'froala',
+                inlineMode: false,
+            }
+        }
+    }
+}, {
+    icon: 'bookmark',
+    sidebarName: 'Pages',
+    pluralName: 'Pages',
+    singularName: 'Page',
     tableColumns: [
         {
             data: 'title',

@@ -29,3 +29,10 @@
         <p>{{test}}</p>
     </div>
 </template>
+
+<template name="pages">
+    <h1>Pages</h1>
+    {{#each sortedPages}}
+        <a href="page/{{_id}}">{{title}}</a>
+    {{/each}}
+</template>
