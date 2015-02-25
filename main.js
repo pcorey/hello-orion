@@ -1,4 +1,9 @@
 if (Meteor.isClient) {
+    Template.nav.created = function() {
+        orion.subs.subscribe('dictionary');
+        orion.subs.subscribe('entity', 'pages')
+    };
+
     Template.nav.helpers({
         sortedPages: function() {
             var order = orion.dictionary.get('pages', []);
@@ -13,7 +18,6 @@ if (Meteor.isClient) {
             return fetch;
         },
         current: function(path) {
-            console.log('current', Iron.Location.get().path, '/page/'+this._id);
             return Iron.Location.get().path === '/page/'+this._id;
         }
     });
