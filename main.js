@@ -1,15 +1,5 @@
-// Template.main.helpers({
-    
-// })
-
 if (Meteor.isClient) {
-    Template.main.helpers({
-        test: function() {
-            return '{{> tester 666}}';
-        }
-    });
-
-    Template.pages.helpers({
+    Template.nav.helpers({
         sortedPages: function() {
             var order = orion.dictionary.get('pages', []);
             var orderMap = order.reduce(function(map, id, idx) {
@@ -21,12 +11,10 @@ if (Meteor.isClient) {
                 return orderMap[a._id] - orderMap[b._id];
             });
             return fetch;
-        }
-    })
-
-    Template.tester.helpers({
-        test: function() {
-            return Session.get('test');
+        },
+        current: function(path) {
+            console.log('current', Iron.Location.get().path, '/page/'+this._id);
+            return Iron.Location.get().path === '/page/'+this._id;
         }
     });
 }
