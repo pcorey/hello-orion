@@ -20,7 +20,6 @@ orion.dictionary.addDefinition('pages.$', 'config', {
 orion.dictionary.addDefinition('pages', 'config', {
     type: Array,
     minCount: 1,
-    maxCount: 4,
     optional: false,
     label: 'Page Order'
 });

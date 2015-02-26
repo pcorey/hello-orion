@@ -1,5 +1,5 @@
 Router.route('/', function() {
-    this.render('pages');
+    this.render('main');
 });
 
 Router.route('/page/:_id', function() {
